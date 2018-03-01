@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nedtælling Jul</title>
+    <script>
+    function startCountdown(dates, elem, format) {
+    var now = new Date(), index = 0, targetDate;
+
+    // Returns the next date a specific month/day combination occurs.
+    function nextDateOccurs(arr) {
+    var monthNotYet = now.getMonth() < arr[0] - 1,
+    dayNotYet = now.getMonth() == arr[0] - 1 && now.getDate() < arr[1];
+
+    if(monthNotYet || dayNotYet) {
+    // Date will pass within this calendar year
+    return new Date(now.getFullYear(), arr[0] - 1, arr[1]);
+    } else {
+    // Date has already passed within this calendar year
+    return new Date(now.getFullYear() + 1, arr[0] - 1, arr[1]);
+    }
+    }
+
+    // Returns the numeric argument followed by the singular
+    // or plural name of the item as is correct (and then
+    // a space character).
+    function formatQuantity(num, singular, plural) {
+    return num + " " + (num == 1 ? singular : plural) + " ";
+    }
+
+    // Pick the target date that is closest.
+    for(var j = 0; j < dates.length; ++j) {
+    if(nextDateOccurs(dates[j]) < nextDateOccurs(dates[index])) {
+    index = j;
+    }
+    }
+
+    // Make a Date object for the target date.
+    targetDate = nextDateOccurs(dates[index]);
+
+
+    // Update the countdown every second.
+    function updateCountdown() {
+    var months = 0, millis, advNow, advNow1, words = "";
+
+    // Update now with the current date and time.
+    advNow1 = now = new Date();
+
+    // Has the target date already passed?
+    if(now >= targetDate) {
+    millis = 0;
+    } else {
+    // Find the last time that is a whole number of months past now
+    // but less than one month before the target date.
+    while(advNow1 < targetDate) {
+    ++months;
+    advNow = advNow1;
+    advNow1 = new Date(now);
+    advNow1.setMonth(now.getMonth() + months);
+    }
+    --months;
+
+    // Find the time difference in milliseconds within the month.
+    millis = targetDate - advNow;
+    }
+
+    // Turn that into months, days, hours, minutes, and seconds.
+    words += formatQuantity(months, "month", "months");
+    words += formatQuantity(Math.floor(millis / 864e5), "day", "days");
+    words += formatQuantity(Math.floor(millis % 864e5 / 36e5), "hour", "hours");
+    words += formatQuantity(Math.floor(millis % 36e5 / 6e4), "minute", "minutes");
+    words += formatQuantity(Math.floor(millis % 6e4 / 1e3), "second", "seconds");
+
+    // Update the element.
+    elem.innerHTML = format
+    .replace(/%NAME%/g, dates[index][2])
+    .replace(/%WORDS%/g, words);
+
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+    }
+
+    function countdownSettings() {
+    startCountdown([
+    // Change the dates here to customize the script.
+
+    [12, 24, "Christmas"]
+
+    ],
+    /* Element to update */ document.getElementById("countdown"),
+    /* Format of HTML inserted */ "%NAME% is in: %WORDS%"
+    );
+    }
+
+    // Run the script only after the page has fully loaded
+    // to ensure that elements are accessible from the DOM.
+    if(window.addEventListener) {
+    window.addEventListener("load", countdownSettings, false);
+    } else {
+    window.attachEvent("onload", countdownSettings);
+    }
+    </script>
+</head>
+<body>
+<p id="countdown"></p>
+
+</body>
+</html>

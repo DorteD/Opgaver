@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NemProgLommeregner</title>
+    <script>
+        function beregn(operator) {
+            var x = parseInt(document.getElementById('txt1').value);
+            var y = parseInt(document.getElementById('txt2').value);
+            var resultat;
+            switch(operator){
+                case '+':
+                    resultat=x+y;
+                    break;
+                case '-':
+                    resultat=x-y;
+                    break;
+                case '*':
+                    resultat=x*y;
+                    break;
+                case'/':
+                    resultat=x/y;
+                    break;
+                default:
+                    resultat='ukendt';
+                    break;
+            }
+
+
+            document.getElementById('result').value=resultat;
+
+        }
+        function add(){
+            beregn('+')
+
+
+
+        }
+    </script>
+</head>
+<body>
+
+
+<input type="text" id="txt1"/>
+
+<button onclick="beregn('+')">+</button>
+<button onclick="beregn('-')">-</button>
+<button onclick="beregn('*')">*</button>
+<button onclick="beregn('/')">/</button>
+<input type="text" id="txt2"/>
+<p>=</p>
+<input type="text" id="result"/>
+
+</body>
+</html>

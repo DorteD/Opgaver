@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tabel</title>
+    <script>
+     function beregnTable(element) {
+      var table=parseInt(element.value);
+      var result=document.getElementById('result');
+
+      for(i=table; i<=table*10; i+=table)
+       result.innerHTML+=i +",";
+       result.innerHTML+="<br>";
+     }
+    </script>
+</head>
+<body>
+ <input type="text" onchange="beregnTable(this)">
+ <p id="result" ></p>
+
+</body>
+</html>

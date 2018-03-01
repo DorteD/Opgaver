@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Areal af trekant</title>
+    <script>
+
+        function beregnAreal() {
+
+
+
+        var side1 = parseInt(document.getElementById('side1').value);
+        var side2 = parseInt(document.getElementById('side2').value);
+        var side3 = parseInt(document.getElementById('side3').value);
+        var perimeter = (side1 + side2 + side3)/2;
+        var area =  Math.sqrt(perimeter*((perimeter-side1)*(perimeter-side2)*(perimeter-side3)));
+            document.getElementById('result').value=area;
+        }
+    </script>
+</head>
+<body>
+<form target="_blank">
+<input type="text" id="side1"> 1.Sides længde<br>
+<input type="text" id="side2"> 2.Sides længde<br>
+<input type="text" id="side3"> 3.Sides længde<br>
+<button onclick="beregnAreal()">beregn areal</button><br>
+<input type=text id="result">
+
+</form>
+
+</body>
+</html>
